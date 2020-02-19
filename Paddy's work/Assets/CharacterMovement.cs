@@ -13,7 +13,7 @@ public class CharacterMovement : MonoBehaviour
     
     bool is_idling = true;
     private float current_speed = 1;
-    private float turning_speed = 90;
+    private float turning_speed = 30;
     CameraControl my_camera;
     Animator my_animation;
 
@@ -32,8 +32,7 @@ public class CharacterMovement : MonoBehaviour
         my_current_Animation = My_Char_Animations.Idle;
 
         if (should_walk_forward()) walk_forward();
-        if (should_turn_left()) turn_left();
-        if (should_turn_right()) turn_right();
+        turn(Input.GetAxis("Horizontal"));
         if (should_walk_backward()) walk_backward();
         if (should_run_backward()) run_backward();
         if (should_disconnect_camera()) disconnect_camera();
@@ -96,8 +95,8 @@ public class CharacterMovement : MonoBehaviour
 
     private bool should_run_backward()
     {
-        return (Input.GetKey(KeyCode.S)
-            && Input.GetKey(KeyCode.LeftShift));
+        return (Input.GetKey(KeyCode.S));
+            
     }
 
     private void stop_walking()
@@ -115,25 +114,11 @@ public class CharacterMovement : MonoBehaviour
         transform.parent = null;
     }
 
-    private void turn_right()
+    private void turn(float horz)
     {
-        transform.Rotate(Vector3.up, turning_speed * Time.deltaTime);
+        transform.Rotate(Vector3.up, horz*turning_speed * Time.deltaTime);
     }
 
-    private bool should_turn_right()
-    {
-        return Input.GetKey(KeyCode.D);
-    }
-
-    private void turn_left()
-    {
-        transform.Rotate(Vector3.up, -turning_speed * Time.deltaTime);
-    }
-
-    private bool should_turn_left()
-    {
-        return Input.GetKey(KeyCode.A);
-    }
 
     private void walk_backward()
     {
@@ -144,7 +129,8 @@ public class CharacterMovement : MonoBehaviour
 
     private bool should_walk_backward()
     {
-        return Input.GetKey(KeyCode.S);
+        return (Input.GetKey(KeyCode.S)
+        && Input.GetKey(KeyCode.LeftShift));
     }
 
     private void walk_forward()
@@ -156,9 +142,10 @@ public class CharacterMovement : MonoBehaviour
 
     private bool should_walk_forward()
     {
-        return Input.GetKey(KeyCode.W);
+        return (Input.GetKey(KeyCode.W)
+        && Input.GetKey(KeyCode.LeftShift));
 
-        
+
     }
 
     private void sprint_forward()
@@ -170,8 +157,8 @@ public class CharacterMovement : MonoBehaviour
 
     private bool should_sprint()
     {
-        return (Input.GetKey(KeyCode.W)
-             && Input.GetKey(KeyCode.LeftShift));
+        return (Input.GetKey(KeyCode.W));
+             
     }
 
   
