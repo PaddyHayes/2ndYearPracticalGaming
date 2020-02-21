@@ -95,7 +95,7 @@ public class CharacterMovement : MonoBehaviour
 
     private bool should_run_backward()
     {
-        return (Input.GetKey(KeyCode.S));
+        return (Input.GetKey(KeyCode.S)) && !Input.GetKey(KeyCode.LeftShift); 
             
     }
 
@@ -157,7 +157,7 @@ public class CharacterMovement : MonoBehaviour
 
     private bool should_sprint()
     {
-        return (Input.GetKey(KeyCode.W));
+        return (Input.GetKey(KeyCode.W)) && !Input.GetKey(KeyCode.LeftShift);
              
     }
 
